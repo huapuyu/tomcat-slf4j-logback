@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="FILE_CATALINA" class="org.apache.juli.logging.ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/catalina.log</file>
+		<rollingPolicy class="org.apache.juli.logging.ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/archive/catalina-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>14</maxHistory>
+		</rollingPolicy>
+		<encoder class="org.apache.juli.logging.ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="org.apache.juli.logging.ch.qos.logback.contrib.json.classic.JsonLayout">
+				<jsonFormatter class="org.apache.juli.logging.ch.qos.logback.contrib.jackson.JacksonJsonFormatter" />
+				<timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
+				<includeContextName>false</includeContextName>
+				<includeMessage>false</includeMessage>
+				<appendLineSeparator>true</appendLineSeparator>
+			</layout>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_CATALINA" class="org.apache.juli.logging.ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>1000</queueSize>
+		<appender-ref ref="FILE_CATALINA" />
+	</appender>
+	
+	<appender name="FILE_LOCALHOST" class="org.apache.juli.logging.ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/localhost.log</file>
+		<rollingPolicy class="org.apache.juli.logging.ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/archive/localhost-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>14</maxHistory>
+		</rollingPolicy>
+		<encoder class="org.apache.juli.logging.ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="org.apache.juli.logging.ch.qos.logback.contrib.json.classic.JsonLayout">
+				<jsonFormatter class="org.apache.juli.logging.ch.qos.logback.contrib.jackson.JacksonJsonFormatter" />
+				<timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
+				<includeContextName>false</includeContextName>
+				<includeMessage>false</includeMessage>
+				<appendLineSeparator>true</appendLineSeparator>
+			</layout>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_LOCALHOST" class="org.apache.juli.logging.ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>1000</queueSize>
+		<appender-ref ref="FILE_LOCALHOST" />
+	</appender>
+	
+	<appender name="FILE_MANAGER" class="org.apache.juli.logging.ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/manager.log</file>
+		<rollingPolicy class="org.apache.juli.logging.ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/archive/manager-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>14</maxHistory>
+		</rollingPolicy>
+		<encoder class="org.apache.juli.logging.ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="org.apache.juli.logging.ch.qos.logback.contrib.json.classic.JsonLayout">
+				<jsonFormatter class="org.apache.juli.logging.ch.qos.logback.contrib.jackson.JacksonJsonFormatter" />
+				<timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
+				<includeContextName>false</includeContextName>
+				<includeMessage>false</includeMessage>
+				<appendLineSeparator>true</appendLineSeparator>
+			</layout>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_MANAGER" class="org.apache.juli.logging.ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>1000</queueSize>
+		<appender-ref ref="FILE_MANAGER" />
+	</appender>
+	
+	<appender name="FILE_HOST_MANAGER" class="org.apache.juli.logging.ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/host-manager.log</file>
+		<rollingPolicy class="org.apache.juli.logging.ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/archive/host-manager-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>14</maxHistory>
+		</rollingPolicy>
+		<encoder class="org.apache.juli.logging.ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="org.apache.juli.logging.ch.qos.logback.contrib.json.classic.JsonLayout">
+				<jsonFormatter class="org.apache.juli.logging.ch.qos.logback.contrib.jackson.JacksonJsonFormatter" />
+				<timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
+				<includeContextName>false</includeContextName>
+				<includeMessage>false</includeMessage>
+				<appendLineSeparator>true</appendLineSeparator>
+			</layout>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_HOST_MANAGER" class="org.apache.juli.logging.ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>1000</queueSize>
+		<appender-ref ref="FILE_HOST_MANAGER" />
+	</appender>
+	
+	<logger name="org.apache.catalina.core.ContainerBase.[Catalina]" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_LOCALHOST" />
+    </logger>
+
+    <logger name="org.apache.catalina.core.ContainerBase.[Catalina].[/manager]" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_MANAGER" />
+    </logger>
+
+    <logger name="org.apache.catalina.core.ContainerBase.[Catalina].[/host-manager]" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_HOST_MANAGER" />
+    </logger>
+	
+	<root level="INFO">
+		<appender-ref ref="ASYNC_CATALINA" />
+	</root>
+</configuration>

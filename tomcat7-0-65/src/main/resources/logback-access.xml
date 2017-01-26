@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<appender name="ACCESS_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/localhost-access.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/archive/localhost-access-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>14</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+				<jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter" />
+				<timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSZ</timestampFormat>
+				<includeContextName>false</includeContextName>
+				<includeMessage>false</includeMessage>
+				<appendLineSeparator>true</appendLineSeparator>
+			</layout>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_ACCESS_LOG" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>1000</queueSize>
+		<appender-ref ref="ACCESS_LOG" />
+	</appender>
+
+    <appender-ref ref="ASYNC_ACCESS_LOG" />
+</configuration>
